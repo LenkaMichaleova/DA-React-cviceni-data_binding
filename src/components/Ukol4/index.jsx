@@ -18,20 +18,37 @@ Zadání 6: Pokud uživatel správně vyplnil obě pole, do stavu `error` nastav
 */
 
 export const Ukol4 = () => {
+  const [login, setLogin] = useState("Petr")
+  const [password, setPassword] = useState("Heslo1234")
+  const [error, setError] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const data = {login: login, password: password}
+    console.log(data)
+    
+    if (login.length > 0 && password.length > 0) {
+      setError("Přihlášení proběhlo úspěšně")
+    } else {
+      login.length === 0 && setError("Chybí login.");
+      password.length === 0 && setError("Chybí heslo.");
+    }
+  }
+
   return (
     <>
-      <div className="error"></div>
-      <form>
+      <div className="error">{error}</div>
+      <form onSubmit={handleSubmit}>
         <div className="field">
           <label>
             Login:
-            <input type="text" />
+            <input type="text" value={login} onChange={(e) => setLogin(e.target.value)}/>
           </label>
         </div>
         <div className="field">
           <label>
             Heslo:
-            <input type="password" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
           </label>
         </div>
         <button type="submit">Přihlásit</button>
